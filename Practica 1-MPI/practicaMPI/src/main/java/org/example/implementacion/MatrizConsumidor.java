@@ -8,7 +8,8 @@ public class MatrizConsumidor extends Proceso {
     public MatrizConsumidor(Canal canal) {
         this.canal = canal;
     }
-    
+
+
     @Override
     void recibirMensaje(Mensaje<?> mensaje) {
         if (mensaje instanceof Fila) {
