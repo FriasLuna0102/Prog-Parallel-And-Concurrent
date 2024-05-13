@@ -1,0 +1,51 @@
+El proposito del programa es lograr la multiplicacion de matriz,
+todo mediante el paso de mensaje, memoria compartida y distribuida.
+
+Para lograrlo no se utilizo la libreria MPI, sino que se hizo con la 
+arquitectura o la implementacion donde contamos con diferentes tipo de clases.
+
+La clase Canal, que se encarga de las transmisiones de los mensajes, una clase de mensaje
+como su nombre lo indica sera el mensaje. Ademas, estan la clase de proceso que se encarga 
+de los procesos, tambien la clase fila para gestionar la filas, y la de matriz para la logica.
+
+Para ejecutar:
+
+1- Este projecto utiliza el gestor de paquetes de gradle, debemos cargar todas las dependencias.
+2- Centrarnos en la clase main y simplemente correr esta clase.
+
+/// Todo el flujo del programa se maneja en el Main, ya que aqui es donde se crean todos los objetos
+/// de las demas clases.
+
+
+Salidas y entradas:
+
+
+Entrada: 
+double[][] matrizA = {{1, 2}, {3, 4}};
+double[][] matrizB = {{5, 6}, {7, 8}};
+
+
+Salida:
+Resultado de la multiplicación de matrices secuencial:
+[19.0, 22.0]
+[43.0, 50.0]
+
+Resultado de la multiplicación de matrices paralela:
+[19.0, 22.0]
+[43.0, 50.0]
+¿Los resultados son iguales?: true
+
+
+Entrada:
+double[][] matrizA = {{3, 2}, {7, 4}};
+double[][] matrizB = {{3, 6}, {4, 8}};
+
+Salida:
+Resultado de la multiplicación de matrices secuencial:
+[17.0, 34.0]
+[37.0, 74.0]
+
+Resultado de la multiplicación de matrices paralela:
+[17.0, 34.0]
+[37.0, 74.0]
+¿Los resultados son iguales?: true
