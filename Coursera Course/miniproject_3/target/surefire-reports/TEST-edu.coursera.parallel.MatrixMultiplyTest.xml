@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="edu.coursera.parallel.ReciprocalArraySumTest" time="40.079" tests="4" errors="0" skipped="0" failures="1">
+<testsuite name="edu.coursera.parallel.MatrixMultiplyTest" time="34.562" tests="2" errors="0" skipped="0" failures="2">
   <properties>
     <property name="idea.version" value="2024.1.1"/>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="java.vm.version" value="21.0.2+13-LTS-58"/>
     <property name="sun.boot.library.path" value="/home/friasluna/.sdkman/candidates/java/21.0.2-oracle/lib"/>
     <property name="awt.useSystemAAFontSettings" value="on"/>
-    <property name="maven.multiModuleProjectDirectory" value="/home/friasluna/Desktop/Prog.ParalelaConcurrente/Coursera Course/miniproject_1"/>
+    <property name="maven.multiModuleProjectDirectory" value="/home/friasluna/Desktop/Prog.ParalelaConcurrente/Coursera Course/miniproject_3"/>
     <property name="java.vm.vendor" value="Oracle Corporation"/>
     <property name="java.vendor.url" value="https://java.oracle.com/"/>
     <property name="guice.disable.misplaced.annotation.check" value="true"/>
@@ -14,7 +14,7 @@
     <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
-    <property name="user.dir" value="/home/friasluna/Desktop/Prog.ParalelaConcurrente/Coursera Course/miniproject_1"/>
+    <property name="user.dir" value="/home/friasluna/Desktop/Prog.ParalelaConcurrente/Coursera Course/miniproject_3"/>
     <property name="java.vm.compressedOopsMode" value="Zero based"/>
     <property name="java.runtime.version" value="21.0.2+13-LTS-58"/>
     <property name="os.arch" value="amd64"/>
@@ -61,14 +61,18 @@
     <property name="sun.cpu.endian" value="little"/>
     <property name="sun.stdout.encoding" value="UTF-8"/>
   </properties>
-  <testcase name="testParManyTaskTwoHundredMillion" classname="edu.coursera.parallel.ReciprocalArraySumTest" time="18.123">
-    <failure message="It was expected that the many-task parallel implementation would run at least 6.400000x faster, but it only achieved 4.057692x speedup" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: It was expected that the many-task parallel implementation would run at least 6.400000x faster, but it only achieved 4.057692x speedup
+  <testcase name="testPar512_x_512" classname="edu.coursera.parallel.MatrixMultiplyTest" time="7.359">
+    <failure message="It was expected that the parallel implementation would run at least 4.800000x faster, but it only achieved 2.909091x speedup" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: It was expected that the parallel implementation would run at least 4.800000x faster, but it only achieved 2.909091x speedup
 	at junit.framework.Assert.fail(Assert.java:47)
 	at junit.framework.Assert.assertTrue(Assert.java:20)
-	at edu.coursera.parallel.ReciprocalArraySumTest.testParManyTaskTwoHundredMillion(ReciprocalArraySumTest.java:155)
+	at edu.coursera.parallel.MatrixMultiplyTest.testPar512_x_512(MatrixMultiplyTest.java:118)
 </failure>
   </testcase>
-  <testcase name="testParSimpleTwoMillion" classname="edu.coursera.parallel.ReciprocalArraySumTest" time="0.219"/>
-  <testcase name="testParManyTaskTwoMillion" classname="edu.coursera.parallel.ReciprocalArraySumTest" time="0.206"/>
-  <testcase name="testParSimpleTwoHundredMillion" classname="edu.coursera.parallel.ReciprocalArraySumTest" time="21.531"/>
+  <testcase name="testPar768_x_768" classname="edu.coursera.parallel.MatrixMultiplyTest" time="27.203">
+    <failure message="It was expected that the parallel implementation would run at least 4.800000x faster, but it only achieved 3.325581x speedup" type="junit.framework.AssertionFailedError">junit.framework.AssertionFailedError: It was expected that the parallel implementation would run at least 4.800000x faster, but it only achieved 3.325581x speedup
+	at junit.framework.Assert.fail(Assert.java:47)
+	at junit.framework.Assert.assertTrue(Assert.java:20)
+	at edu.coursera.parallel.MatrixMultiplyTest.testPar768_x_768(MatrixMultiplyTest.java:130)
+</failure>
+  </testcase>
 </testsuite>
