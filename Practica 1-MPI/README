@@ -36,9 +36,6 @@ luego a travez de un metodo multiplicarFila se realizan la multiplicaciones nece
 calcular pues se unen ambas matrices y se obtiene la matriz resultante, la cual se envia a travez del canal. 
 Ya de ultimo se tiene un metodo getResultadoParcial, para obtener la matriz resultante.
 
-Ademas, estan la clase de proceso que se encarga 
-de los procesos, tambien la clase fila para gestionar la filas, y la de matriz para la logica.
-
 Para ejecutar:
 
 1- Este projecto utiliza el gestor de paquetes de gradle, debemos cargar todas las dependencias.
