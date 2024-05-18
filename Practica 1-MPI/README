@@ -4,8 +4,39 @@ todo mediante el paso de mensaje, memoria compartida y distribuida.
 Para lograrlo no se utilizo la libreria MPI, sino que se hizo con la 
 arquitectura o la implementacion donde contamos con diferentes tipo de clases.
 
-La clase Canal, que se encarga de las transmisiones de los mensajes, una clase de mensaje
-como su nombre lo indica sera el mensaje. Ademas, estan la clase de proceso que se encarga 
+La clase Canal:
+Que se encarga de las transmisiones de los mensajes, esta clase contiene un metodo
+para registrar los diferentes procesos para la multiplicacion de la matriz. Ademas, de
+el metodo para enviarMensajes que recibe el proceso destino, y el mensaje como tal. 
+
+La clase de Mensaje
+Como su nombre lo indica sera el mensaje, es la clase que se encarga de gestionar los mensajes
+sin importar de que tipo sea, ya que la clase es generica. 
+
+La clase Proceso:
+Esta es la clase que se encarga de recibir los diferentes procesos, 
+la misma contiene un metodo abstracto llamado recibirMensajes, el cual
+es implementado en la clase de MatrizConsumidor.
+
+La clase MatrizConsumidor:
+Esta clase extiende de la de proceso, esta es la que implementa el metodo abstracto
+de recibirMensajes, donde recibe una porcion de la matriz, como las filas, y realiza los 
+procedimientos requeridos, como insertar las filas correspondiente en la matrix
+resultante. Tambien cuenta con un metodo de recopilarResultados para retornar la matriz
+resultante con las filas agregadas.
+
+La clase Fila:
+Como su nombre lo indica esta clase se utiliza para lograr particionar, o solo tomar una proporcion de la matrices,
+esta extiende de la clase mensaje, ya que se enviara a travez de esta.
+
+La clase MatrizMultiplicadora:
+Esta es la que se encarga de gestionar las multiplicaciones, basicamente la parte logica de la tarea.
+En esta clase contamos con el metodo de recibirMensajes, ya que esta extiende de procesos, se reciben las filas,
+luego a travez de un metodo multiplicarFila se realizan la multiplicaciones necesarias, y ya luego en el metodo
+calcular pues se unen ambas matrices y se obtiene la matriz resultante, la cual se envia a travez del canal. 
+Ya de ultimo se tiene un metodo getResultadoParcial, para obtener la matriz resultante.
+
+Ademas, estan la clase de proceso que se encarga 
 de los procesos, tambien la clase fila para gestionar la filas, y la de matriz para la logica.
 
 Para ejecutar:
