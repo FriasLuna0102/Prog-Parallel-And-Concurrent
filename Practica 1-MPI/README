@@ -1,56 +1,39 @@
 El proposito del programa es lograr la multiplicacion de matriz,
 todo mediante el paso de mensaje, memoria compartida y distribuida.
 
-Para lograrlo no se utilizo la libreria MPI, sino que se hizo con la 
-arquitectura o la implementacion donde contamos con diferentes tipo de clases.
+Para lograrlo se utilizo la libreria MPI.
 
-La clase Canal:
-Que se encarga de las transmisiones de los mensajes, esta clase contiene un metodo
-para registrar los diferentes procesos para la multiplicacion de la matriz. Ademas, de
-el metodo para enviarMensajes que recibe el proceso destino, y el mensaje como tal. 
+El programa basicamente lo que realiza es la multiplicacion de las matrices,
+en primer lugar se inicializan las matrices en el rank cuando es igual a 0.
+Una vez que se inicializa se empieza a tomar el tiempo de ejecucion para medir el rendimiento
+del programa para correrlo con diferentes cantidades de procesadores. 
 
-La clase de Mensaje
-Como su nombre lo indica sera el mensaje, es la clase que se encarga de gestionar los mensajes
-sin importar de que tipo sea, ya que la clase es generica. 
+Luego se toman las filas por cada proceso, pero antes de utilizarlas se 
+paan a matrices de formato unidimensionl debido a que MPI no permite hacer cast
+a matrices bidimensionales.
 
-La clase Proceso:
-Esta es la clase que se encarga de recibir los diferentes procesos, 
-la misma contiene un metodo abstracto llamado recibirMensajes, el cual
-es implementado en la clase de MatrizConsumidor.
+Luego con el uso de las funciones Scatter y Bcast se distribuyen las matrices a todos los
+diferentes procesos. Mediante el paso de mensajes se realiza la division de las porciones para realizar
+el calculo en la matrix C.
 
-La clase MatrizConsumidor:
-Esta clase extiende de la de proceso, esta es la que implementa el metodo abstracto
-de recibirMensajes, donde recibe una porcion de la matriz, como las filas, y realiza los 
-procedimientos requeridos, como insertar las filas correspondiente en la matrix
-resultante. Tambien cuenta con un metodo de recopilarResultados para retornar la matriz
-resultante con las filas agregadas.
+Finalemnte se recogen todos los datos con la funcion Gather, para de esta forma luego mediante un for
+lograr recorrer C para imprimir los resultados y luego finalizar el tiempo de ejecucion.
 
-La clase Fila:
-Como su nombre lo indica esta clase se utiliza para lograr particionar, o solo tomar una proporcion de la matrices,
-esta extiende de la clase mensaje, ya que se enviara a travez de esta.
+PARA COMPILAR EL PROGRAMA:
 
-La clase MatrizMultiplicadora:
-Esta es la que se encarga de gestionar las multiplicaciones, basicamente la parte logica de la tarea.
-En esta clase contamos con el metodo de recibirMensajes, ya que esta extiende de procesos, se reciben las filas,
-luego a travez de un metodo multiplicarFila se realizan la multiplicaciones necesarias, y ya luego en el metodo
-calcular pues se unen ambas matrices y se obtiene la matriz resultante, la cual se envia a travez del canal. 
-Ya de ultimo se tiene un metodo getResultadoParcial, para obtener la matriz resultante.
+1: Descargar la libreria de MPJ desde su pagina oficial, y descomprimirla.
+2: Luego instalar javac 1.8.
+3: Exportar la carpeta descomprimida con el comando: export MPJ_HOME=/ruta/mpj
+4: Exportar esa variable de entorno MPJ_HOME a la de PATH.
+5: Compilar el Main.java con el comando: javac -cp $MPJ_HOME/lib/mpj.jar Main.java
+6: Ejecutar el archivo class: $MPJ_HOME/bin/mpjrun.sh -np 2 Main  (el 2 indica la cantidad de procesadores que se utilizaran)
 
-Para ejecutar:
-
-1- Este projecto utiliza el gestor de paquetes de gradle, debemos cargar todas las dependencias.
-2- Centrarnos en la clase main y simplemente correr esta clase.
-
-/// Todo el flujo del programa se maneja en el Main, ya que aqui es donde se crean todos los objetos
-/// de las demas clases.
-
-
-Salidas y entradas:
+SALIDAS Y ENTRADAS:
 
 
 Entrada: 
-double[][] matrizA = {{1, 2}, {3, 4}};
-double[][] matrizB = {{5, 6}, {7, 8}};
+double[][] A = {{1, 2}, {3, 4}};
+double[][] B = {{5, 6}, {7, 8}};
 
 
 Salida:
@@ -65,8 +48,8 @@ Resultado de la multiplicación de matrices paralela:
 
 
 Entrada:
-double[][] matrizA = {{3, 2}, {7, 4}};
-double[][] matrizB = {{3, 6}, {4, 8}};
+double[][] A = {{3, 2}, {7, 4}};
+double[][] B = {{3, 6}, {4, 8}};
 
 Salida:
 Resultado de la multiplicación de matrices secuencial:
@@ -77,3 +60,20 @@ Resultado de la multiplicación de matrices paralela:
 [17.0, 34.0]
 [37.0, 74.0]
 ¿Los resultados son iguales?: true
+
+
+ANALISIS DEL RENDIMIENTO:
+
+El tiempo de ejecucion para 2 procesadores es el siguiente: Tiempo de ejecución MPJ: 2 milisegundos, 
+a medida que se aumentan los procesadores en la ejecucion aumenta el tiempo de ejecucion, veamos para 4,6,8,16.
+
+4: Tiempo de ejecución MPJ: 2 milisegundos
+6: Tiempo de ejecución MPJ: 3 milisegundos
+8: Tiempo de ejecución MPJ: 6 milisegundos
+16: Tiempo de ejecución MPJ: 12 milisegundos
+
+La razon por la que sucede esto son las siguiente:
+
+Overhead de comunicacion ya que al ser mayores procesadores necesitan comunicarse y eso toma tiempo.
+Balance de carga por el hecho de que hay tantos procesadores la carga no se distribuye de la mejor manera al no ser tan intensivo el calculo.
+
