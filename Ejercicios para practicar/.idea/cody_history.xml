@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChatHistory">
+    <accountData>
+      <list>
+        <AccountData>
+          <accountId value="VXNlcjo0NTI5MzY=" />
+          <chats>
+            <list>
+              <chat>
+                <internalId value="616053a7-fdf0-4f70-bc95-1987b7522aaa" />
+                <llm>
+                  <llm>
+                    <model value="anthropic/claude-3-sonnet-20240229" />
+                    <provider value="Anthropic" />
+                    <title value="Claude 3 Sonnet" />
+                  </llm>
+                </llm>
+              </chat>
+              <chat>
+                <internalId value="2388c68c-3b33-4451-870b-e022c3a74d3e" />
+                <llm>
+                  <llm>
+                    <model value="anthropic/claude-3-sonnet-20240229" />
+                    <provider value="Anthropic" />
+                    <title value="Claude 3 Sonnet" />
+                  </llm>
+                </llm>
+                <messages>
+                  <list>
+                    <message>
+                      <speaker value="HUMAN" />
+                      <text value="Que utiliza y hace esto:&#10;&#10;Que arquitectura puedes observar?&#10;&#10;package org.example;&#10;&#10;import java.util.Arrays;&#10;import java.util.Random;&#10;&#10;public class Main {&#10;&#10;    public static void main(String[] args) throws InterruptedException {&#10;&#10;        // Tamaño del arreglo&#10;        int n = 1000000;&#10;        //Numero de hilos&#10;        int numThreads = 4;&#10;&#10;        // Crear el arreglo.&#10;        int[] randomArray = new int[n];&#10;&#10;        // Create a Random object&#10;        Random random = new Random();&#10;&#10;        // Assign random values to the array&#10;        for (int i = 0; i &amp;lt; n; i++) {&#10;            randomArray[i] = random.nextInt(10);&#10;        }&#10;&#10;        // Calculate the sum sequentially&#10;        long startTime = System.currentTimeMillis();&#10;        int sequentialSum = calculateSumSequentially(randomArray);&#10;        long endTime = System.currentTimeMillis();&#10;        System.out.println(&amp;quot;Sequential Sum: &amp;quot; + sequentialSum);&#10;        System.out.println(&amp;quot;Sequential Time: &amp;quot; + (endTime - startTime) + &amp;quot; ms&amp;quot;);&#10;&#10;        // Calculate the sum in parallel&#10;        startTime = System.currentTimeMillis();&#10;        int parallelSum = calculateSumInParallel(randomArray, numThreads);&#10;        endTime = System.currentTimeMillis();&#10;        System.out.println(&amp;quot;Parallel Sum: &amp;quot; + parallelSum);&#10;        System.out.println(&amp;quot;Parallel Time: &amp;quot; + (endTime - startTime) + &amp;quot; ms&amp;quot;);&#10;    }&#10;&#10;    public static int calculateSumSequentially(int[] array) {&#10;        int sum = 0;&#10;        for (int value : array) {&#10;            sum += value;&#10;        }&#10;        return sum;&#10;    }&#10;&#10;    public static int calculateSumInParallel(int[] array, int numThreads) throws InterruptedException {&#10;        int length = array.length;&#10;        int chunkSize = length / numThreads;&#10;        SumThread[] threads = new SumThread[numThreads];&#10;        int[] partialSums = new int[numThreads];&#10;&#10;        for (int i = 0; i &amp;lt; numThreads; i++) {&#10;            int start = i * chunkSize;&#10;            int end = (i == numThreads - 1) ? length : start + chunkSize;&#10;            threads[i] = new SumThread(array, start, end, partialSums, i);&#10;            threads[i].start();&#10;        }&#10;&#10;        for (SumThread thread : threads) {&#10;            thread.join();&#10;        }&#10;&#10;        int totalSum = 0;&#10;        for (int sum : partialSums) {&#10;            totalSum += sum;&#10;        }&#10;&#10;        return totalSum;&#10;    }&#10;}&#10;&#10;class SumThread extends Thread {&#10;    private final int[] array;&#10;    private final int start;&#10;    private final int end;&#10;    private final int[] partialSums;&#10;    private final int index;&#10;&#10;    public SumThread(int[] array, int start, int end, int[] partialSums, int index) {&#10;        this.array = array;&#10;        this.start = start;&#10;        this.end = end;&#10;        this.partialSums = partialSums;&#10;        this.index = index;&#10;    }&#10;&#10;    @Override&#10;    public void run() {&#10;        int sum = 0;&#10;        for (int i = start; i &amp;lt; end; i++) {&#10;            sum += array[i];&#10;        }&#10;        partialSums[index] = sum;&#10;    }&#10;}&#10;" />
+                    </message>
+                    <message>
+                      <speaker value="ASSISTANT" />
+                      <text value="Este código implementa una solución paralela para calcular la suma de los elementos de un arreglo de enteros utilizando hilos (threads) en Java.&#10;&#10;La arquitectura que se puede observar es una arquitectura de programación paralela basada en hilos (thread-based parallel programming architecture).&#10;&#10;Aquí está lo que hace el código:&#10;&#10;1. Se crea un arreglo de enteros de tamaño `n` (1000000 en este caso) y se asignan valores aleatorios a cada elemento.&#10;2. Se calcula la suma de los elementos del arreglo de forma secuencial utilizando el método `calculateSumSequentially` y se mide el tiempo que toma.&#10;3. Se calcula la suma de los elementos del arreglo de forma paralela utilizando el método `calculateSumInParallel` y se mide el tiempo que toma.&#10;4. El método `calculateSumInParallel` divide el arreglo en `numThreads` (4 en este caso) partes iguales (chunks).&#10;5. Se crean `numThreads` hilos (`SumThread`) y cada hilo se encarga de calcular la suma de los elementos en su chunk correspondiente.&#10;6. Cada hilo calcula la suma parcial de su chunk y la almacena en un arreglo `partialSums`.&#10;7. El método `calculateSumInParallel` espera a que todos los hilos terminen utilizando el método `join()`.&#10;8. Finalmente, se suma todas las sumas parciales para obtener la suma total del arreglo.&#10;&#10;La clase `SumThread` extiende la clase `Thread` y representa un hilo individual que calcula la suma parcial de un chunk del arreglo.&#10;&#10;La arquitectura de programación paralela basada en hilos permite dividir el trabajo en tareas más pequeñas y ejecutarlas simultáneamente en múltiples hilos, aprovechando los recursos de procesamiento disponibles (como múltiples núcleos de CPU) para mejorar el rendimiento en comparación con la ejecución secuencial." />
+                    </message>
+                  </list>
+                </messages>
+                <updatedAt value="2024-06-05T13:22:32.674420116" />
+              </chat>
+              <chat>
+                <internalId value="386b46cc-753d-44dd-8fcb-d9796b1f8b27" />
+                <llm>
+                  <llm>
+                    <model value="anthropic/claude-3-sonnet-20240229" />
+                    <provider value="Anthropic" />
+                    <title value="Claude 3 Sonnet" />
+                  </llm>
+                </llm>
+              </chat>
+              <chat>
+                <internalId value="1c4c7d00-00c5-4ca9-8dff-bb5caa1521b6" />
+                <llm>
+                  <llm>
+                    <model value="anthropic/claude-3-sonnet-20240229" />
+                    <provider value="Anthropic" />
+                    <title value="Claude 3 Sonnet" />
+                  </llm>
+                </llm>
+                <messages>
+                  <list>
+                    <message>
+                      <speaker value="HUMAN" />
+                      <text value="Has el merge sort de manera paralela" />
+                    </message>
+                    <message>
+                      <speaker value="ASSISTANT" />
+                      <text value="Claro, aquí te muestro una implementación paralela del algoritmo Merge Sort en Java utilizando el marco de trabajo `ForkJoinPool` de Java:&#10;&#10;```java&#10;import java.util.concurrent.ForkJoinPool;&#10;import java.util.concurrent.RecursiveAction;&#10;&#10;public class ParallelMergeSort {&#10;&#10;    private static final int THRESHOLD = 1000; // Umbral para dividir el problema&#10;&#10;    public static void parallelMergeSort(int[] array) {&#10;        ForkJoinPool pool = new ForkJoinPool();&#10;        pool.invoke(new MergeSortTask(array, 0, array.length - 1));&#10;    }&#10;&#10;    private static class MergeSortTask extends RecursiveAction {&#10;        private final int[] array;&#10;        private final int low;&#10;        private final int high;&#10;&#10;        public MergeSortTask(int[] array, int low, int high) {&#10;            this.array = array;&#10;            this.low = low;&#10;            this.high = high;&#10;        }&#10;&#10;        @Override&#10;        protected void compute() {&#10;            if (high - low &lt; THRESHOLD) {&#10;                // Si el tamaño del subarray es menor que el umbral, se ordena secuencialmente&#10;                mergeSort(array, low, high);&#10;            } else {&#10;                // Si el tamaño del subarray es mayor o igual que el umbral, se divide y se ordena en paralelo&#10;                int mid = low + (high - low) / 2;&#10;                MergeSortTask leftTask = new MergeSortTask(array, low, mid);&#10;                MergeSortTask rightTask = new MergeSortTask(array, mid + 1, high);&#10;                invokeAll(leftTask, rightTask);&#10;                merge(array, low, mid, high);&#10;            }&#10;        }&#10;&#10;        private void mergeSort(int[] array, int low, int high) {&#10;            if (low &lt; high) {&#10;                int mid = low + (high - low) / 2;&#10;                mergeSort(array, low, mid);&#10;                mergeSort(array, mid + 1, high);&#10;                merge(array, low, mid, high);&#10;            }&#10;        }&#10;&#10;        private void merge(int[] array, int low, int mid, int high) {&#10;            int[] temp = new int[high - low + 1];&#10;            int i = low, j = mid + 1, k = 0;&#10;&#10;            while (i &lt;= mid &amp;&amp; j &lt;= high) {&#10;                if (array[i] &lt;= array[j]) {&#10;                    temp[k++] = array[i++];&#10;                } else {&#10;                    temp[k++] = array[j++];&#10;                }&#10;            }&#10;&#10;            while (i &lt;= mid) {&#10;                temp[k++] = array[i++];&#10;            }&#10;&#10;            while (j &lt;= high) {&#10;                temp[k++] = array[j++];&#10;            }&#10;&#10;            System.arraycopy(temp, 0, array, low, temp.length);&#10;        }&#10;    }&#10;&#10;    public static void main(String[] args) {&#10;        int[] array = {5, 2, 8, 1, 9, 3, 7, 4, 6};&#10;        parallelMergeSort(array);&#10;        for (int num : array) {&#10;            System.out.print(num + &quot; &quot;);&#10;        }&#10;    }&#10;}&#10;```&#10;&#10;En esta implementación, la clase `ParallelMergeSort` contiene un método estático `parallelMergeSort` que toma un arreglo de enteros como entrada. Este método crea una instancia de `ForkJoinPool` y le envía una tarea `MergeSortTask` para ordenar el arreglo de manera paralela.&#10;&#10;La clase `MergeSortTask` extiende `RecursiveAction` y contiene la lógica principal del algoritmo Merge Sort paralelo. En el método `compute`, se verifica si el tamaño del subarray es menor que un umbral predefinido (`THRESHOLD`). Si es así, se ordena secuencialmente utilizando el método `mergeSort`. De lo contrario, se divide el subarray en dos mitades y se crean dos tareas `MergeSortTask` para ordenar cada mitad en paralelo. Después de que ambas tareas se completan, se fusionan los subarrays ordenados utilizando el método `merge`.&#10;&#10;El método `mergeSort` es una implementación secuencial del algoritmo Merge Sort, mientras que el método `merge` combina dos subarrays ordenados en un solo arreglo ordenado.&#10;&#10;En el método `main`, se crea un arreglo de ejemplo y se llama al método `parallelMergeSort` para ordenarlo. Finalmente, se imprime el arreglo ordenado.&#10;&#10;Esta implementación aprovecha la capacidad de procesamiento paralelo de la CPU al dividir el problema en subproblemas más pequeños y procesarlos simultáneamente en diferentes hilos. Esto puede mejorar significativamente el rendimiento del algoritmo, especialmente para arreglos grandes, en comparación con la implementación secuencial." />
+                    </message>
+                  </list>
+                </messages>
+                <updatedAt value="2024-06-06T04:26:58.599747995" />
+              </chat>
+              <chat>
+                <internalId value="1375b7f1-b26d-4c1b-a929-4cac72296daf" />
+                <llm>
+                  <llm>
+                    <model value="anthropic/claude-3-sonnet-20240229" />
+                    <provider value="Anthropic" />
+                    <title value="Claude 3 Sonnet" />
+                  </llm>
+                </llm>
+              </chat>
+            </list>
+          </chats>
+          <defaultLlm>
+            <llm>
+              <model value="anthropic/claude-3-sonnet-20240229" />
+              <provider value="Anthropic" />
+              <title value="Claude 3 Sonnet" />
+            </llm>
+          </defaultLlm>
+        </AccountData>
+      </list>
+    </accountData>
+  </component>
+</project>
